@@ -38,8 +38,46 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
-}
+    let splitString = expr.match(/.{1,10}/g)
+    let splitStringToString = []
+    let noZeros = [];
+    let decoderArr = [];
+    let resultStr = '';
+  
+    splitString.forEach(element => {
+      splitStringToString.push(element.match(/.{1,2}/g))     
+    });
+    
+    for(let i = 0; i < splitStringToString.length; i++){
+      noZeros.push(splitStringToString[i].filter((item)=> item != 00))
+    }
+    
+    noZeros.map((item) => {
+      let noZerosElem = item.map((elem, i) => {
+        if(elem === '10') {
+          return item[i] = '.';
+        }
+        if(elem === '11') {
+          return item[i] = '-';
+        }
+        if(elem === '**') {
+          return item[i] = ' ';
+        }
+      })
+      decoderArr.push(noZerosElem.join(''))
+  
+    })
+    
+    for(let val of decoderArr) {
+      if(val !== '     '){
+        resultStr += MORSE_TABLE[val]
+      }else {
+        resultStr += ' ';
+      }
+    }
+    return resultStr
+    
+  }
 
 module.exports = {
     decode
